@@ -42,7 +42,7 @@ if (!email || !amount || !name) {
           amount,
           currency: "NGN",
           payment_options: "banktransfer",
-          redirect_url: "https://t.me/Aurionagent?text=Hello%20,%20Admin%20.%20I%20have%20just%20made%20my%20payment%20for%20the%20Aurion%20Activation%20Please%20confirm%20my%20payment",
+          redirect_url: "https://t.me/nextelverifyapp?text=Hello%20,%20Admin%20.%20I%20have%20just%20made%20my%20payment%20for%20the%20NEXTEL%20E-sim%20Activation%20.%20Please%20confirm%20my%20payment",
 
           customer: {
             email,
