@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -10,19 +9,13 @@ export default async function handler(req, res) {
 
   if (req.method !== "POST") {
     return res.status(405).json({
-      success: false,
+      status: false,
       message: "Method not allowed"
     });
   }
 
   try {
-
-    const {
-      firstName,
-      lastName
-    } = req.body;
-
-    const bvn = process.env.REGISTRATION_NUMBER;
+    const { firstName, lastName } = req.body;
 
     const response = await fetch(
       "https://mevonpay.com.ng/V1/createtempva",
@@ -33,49 +26,39 @@ export default async function handler(req, res) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-
-          type: "rubies",
-
-          fname: firstName,
-
-          lname: lastName,
-
-          registration_number: bvn
-
-          // amount: amount,
-          // currency: "NGN"
-
+          fname: firstName || "Nextel",
+          lname: lastName || "User"
         })
       }
     );
 
     const text = await response.text();
 
-    let data;
+    let parsed;
 
     try {
-
-      data = JSON.parse(text.trim());
-
+      const result = JSON.parse(text);
+      parsed = result.raw ? JSON.parse(result.raw) : result;
     } catch {
-
       return res.status(500).json({
-        success: false,
-        message: "Non JSON response",
+        status: false,
+        message: "Invalid response from MevonPay",
         response: text
       });
-
     }
 
-    return res.status(response.ok ? 200 : 400).json(data);
-
-  } catch (err) {
-
-    return res.status(500).json({
-      success: false,
-      message: err.message
+    return res.status(200).json({
+      status: true,
+      account_number: parsed.account_number,
+      account_name: parsed.account_name,
+      bank_name: parsed.bank_name,
+      reference: parsed.reference
     });
 
+  } catch (err) {
+    return res.status(500).json({
+      status: false,
+      message: err.message
+    });
   }
-
 }
