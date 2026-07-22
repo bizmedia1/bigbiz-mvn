@@ -35,7 +35,7 @@ export default async function handler(req, res) {
   account_number: parsed.account_number,
   account_name: parsed.account_name,
   bank_name: parsed.bank_name,
-  amount: 14000,
+  amount: 10500,
   reference: parsed.reference
 });
   } catch (err) {
