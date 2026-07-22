@@ -38,7 +38,7 @@ if (!email || !amount || !name) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          tx_ref: `NEXTEL_${Date.now()}`,
+          tx_ref: `odera_${Date.now()}`,
           amount,
           currency: "NGN",
           payment_options: "banktransfer",
@@ -51,8 +51,8 @@ if (!email || !amount || !name) {
           },
 
           customizations: {
-            title: "Nextel",
-            description: "Membership Payment",
+            title: "Odera",
+            description: "Subscription",
           },
         }),
       }
