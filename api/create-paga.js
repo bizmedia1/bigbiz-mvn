@@ -37,12 +37,10 @@ export default async function handler(req, res) {
       amount: 14000,
       reference: parsed.reference
     });
-payments[reference] = {
-status: "pending"
-}
+
   } catch (err) {
     return res.status(500).json({
       error: err.message
     });
   }
-  }
+}
