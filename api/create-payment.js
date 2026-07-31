@@ -53,18 +53,13 @@ export default async function handler(req, res) {
     }
 
     return res.status(200).json({
-
-      account_number: parsed.account_number,
-
-      account_name: parsed.account_name,
-
-      bank_name: parsed.bank_name,
-
-      amount: 10500,
-
-      reference: parsed.reference
-
-    });
+    status: true,
+    account_number: parsed.account_number,
+    account_name: parsed.account_name,
+    bank_name: parsed.bank_name,
+    amount: 10500,
+    reference: parsed.reference
+});
 
   } catch (err) {
 
