@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -10,19 +9,13 @@ export default async function handler(req, res) {
 
   if (req.method !== "POST") {
     return res.status(405).json({
-      success: false,
-      message: "Method not allowed"
+      error: "Method Not Allowed"
     });
   }
 
   try {
 
-    const {
-      firstName,
-      lastName
-    } = req.body;
-
-    const bvn = process.env.REGISTRATION_NUMBER;
+    const { firstName, lastName } = req.body;
 
     const response = await fetch(
       "https://mevonpay.com.ng/V1/createtempva",
@@ -33,46 +26,51 @@ export default async function handler(req, res) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-
-          type: "rubies",
-
           fname: firstName,
-
-          lname: lastName,
-
-          registration_number: bvn
-
+          lname: lastName
         })
       }
     );
 
     const text = await response.text();
 
-    let data;
+    let parsed;
 
     try {
 
-      data = JSON.parse(text.trim());
+      const result = JSON.parse(text);
+
+      parsed = result.raw
+        ? JSON.parse(result.raw)
+        : result;
 
     } catch {
 
       return res.status(500).json({
-        success: false,
-        message: "Non JSON response",
-        response: text
+        error: text
       });
 
     }
 
-    return res.status(response.ok ? 200 : 400).json(data);
+    return res.status(200).json({
+
+      account_number: parsed.account_number,
+
+      account_name: parsed.account_name,
+
+      bank_name: parsed.bank_name,
+
+      amount: 10500,
+
+      reference: parsed.reference
+
+    });
 
   } catch (err) {
 
     return res.status(500).json({
-      success: false,
-      message: err.message
+      error: err.message
     });
 
   }
-
 }
