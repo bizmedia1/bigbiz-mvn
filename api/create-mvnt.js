@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     }
 
     const response = await fetch(
-      "https://api.movantrapay.com/v1/paga/virtual-accounts",
+      "https://api.movantrapay.com/v1/palmpay/virtual-accounts",
       {
         method: "POST",
         headers: {
