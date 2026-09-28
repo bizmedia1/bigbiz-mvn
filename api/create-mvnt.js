@@ -28,21 +28,13 @@ export default async function handler(req, res) {
 
   try {
 
-    const {
-      email,
-      name,
-      phone,
-      customer_ref
-    } = req.body;
+    const { email, name, phone } = req.body;
 
-    if (!email || !name || !customer_ref) {
-
+    if (!email || !name) {
       return res.status(400).json({
         status: false,
-        message:
-          "Email, name and customer_ref are required"
+        message: "Email and name are required"
       });
-
     }
 
     const response = await fetch(
@@ -59,27 +51,16 @@ export default async function handler(req, res) {
         },
 
         body: JSON.stringify({
-
-          customer_ref: customer_ref,
-
-          name: name,
-
-          email: email,
-
-          phone: phone
-
+          customer_ref: email,
+          name,
+          email,
+          phone
         })
-
       }
     );
 
     const data =
       await response.json();
-
-    console.log(
-      "MOVANTRA RESPONSE:",
-      JSON.stringify(data)
-    );
 
     return res
       .status(response.status)
