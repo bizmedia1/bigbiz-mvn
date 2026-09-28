@@ -28,35 +28,57 @@ export default async function handler(req, res) {
 
   try {
 
-    const { email, name, phone } = req.body;
+    const {
+      email,
+      name,
+      phone,
+      customer_ref
+    } = req.body;
 
-    if (!email || !name) {
+    if (!email || !name || !customer_ref) {
+
       return res.status(400).json({
         status: false,
-        message: "Email and name are required"
+        message:
+          "Email, name and customer_ref are required"
       });
+
     }
 
     const response = await fetch(
       "https://api.movantrapay.com/v1/palmpay/virtual-accounts",
       {
         method: "POST",
+
         headers: {
-          Authorization: `Bearer ${process.env.MOVANTRA_SECRET_KEY}`,
-          "Content-Type": "application/json"
+          Authorization:
+            `Bearer ${process.env.MOVANTRA_SECRET_KEY}`,
+
+          "Content-Type":
+            "application/json"
         },
+
         body: JSON.stringify({
-          customer_ref: email,
+
+          customer_ref,
+
           name,
+
           email,
+
           phone
+
         })
+
       }
     );
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
-    return res.status(response.status).json(data);
+    return res
+      .status(response.status)
+      .json(data);
 
   } catch (error) {
 
