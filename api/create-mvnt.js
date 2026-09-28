@@ -60,13 +60,13 @@ export default async function handler(req, res) {
 
         body: JSON.stringify({
 
-          customer_ref,
+          customer_ref: customer_ref,
 
-          name,
+          name: name,
 
-          email,
+          email: email,
 
-          phone
+          phone: phone
 
         })
 
@@ -75,6 +75,11 @@ export default async function handler(req, res) {
 
     const data =
       await response.json();
+
+    console.log(
+      "MOVANTRA RESPONSE:",
+      JSON.stringify(data)
+    );
 
     return res
       .status(response.status)
