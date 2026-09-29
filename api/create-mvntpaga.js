@@ -78,7 +78,7 @@ export default async function handler(req, res) {
         "name": "John Doe",
         "email": "john@example.com",
         "phone": "08012345678",
-        "customer_ref": "nextel_john_123"
+        "customer_ref": "onetime_john_123"
       }
     */
 
@@ -280,7 +280,7 @@ export default async function handler(req, res) {
     ) {
 
       finalReference =
-        `nextel_paga_${Date.now()}`
+        `onetime_paga_${Date.now()}`
         .slice(0, 32);
 
     }
