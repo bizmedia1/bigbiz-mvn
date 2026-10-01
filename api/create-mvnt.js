@@ -41,15 +41,10 @@ export default async function handler(req, res) {
       "https://api.movantrapay.com/v1/palmpay/virtual-accounts",
       {
         method: "POST",
-
         headers: {
-          Authorization:
-            `Bearer ${process.env.MOVANTRA_SECRET_KEY}`,
-
-          "Content-Type":
-            "application/json"
+          Authorization: `Bearer ${process.env.MOVANTRA_SECRET_KEY}`,
+          "Content-Type": "application/json"
         },
-
         body: JSON.stringify({
           customer_ref: email,
           name,
@@ -59,12 +54,9 @@ export default async function handler(req, res) {
       }
     );
 
-    const data =
-      await response.json();
+    const data = await response.json();
 
-    return res
-      .status(response.status)
-      .json(data);
+    return res.status(response.status).json(data);
 
   } catch (error) {
 
