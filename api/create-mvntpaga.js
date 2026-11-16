@@ -485,6 +485,12 @@ export default async function handler(req, res) {
 
     }
 
+    console.log("[LIORA PAGA ACCOUNT CREATED]", {
+  reference: result.reference || finalReference,
+  account_number: result.account_number,
+  bank_name: result.bank_name
+});
+
     /* ===================================================
        RETURN CLEAN RESPONSE TO CARRD
     ===================================================== */
