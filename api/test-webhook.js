@@ -1,4 +1,5 @@
 
+
 const crypto = require("crypto");
 
 const secret = process.env.MOVANTRA_SECRET_KEY;
@@ -9,7 +10,7 @@ if (!secret) {
 
 const payload = JSON.stringify({
   event: "charge.success",
-  created_at: new Date().toISOString(),
+  created_at: "2026-11-16T08:00:00+01:00",
   mode: "test",
   data: {
     reference: "LIORA_TEST_001",
@@ -21,11 +22,10 @@ const payload = JSON.stringify({
 
 const signature = crypto
   .createHmac("sha512", secret)
-  .update(Buffer.from(payload, "utf8"))
+  .update(payload)
   .digest("hex");
 
-console.log("PAYLOAD:");
-console.log(payload);
-
-console.log("\nSIGNATURE:");
-console.log(signature);
+console.log(JSON.stringify({
+  payload,
+  signature
+}, null, 2));
